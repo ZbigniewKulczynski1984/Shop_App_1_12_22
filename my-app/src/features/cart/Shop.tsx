@@ -1,19 +1,19 @@
-import { Cart } from './Cart';
-import { Item } from './cartSlice';
-import { Product } from '../product/Product';
+import { Cart } from "./Cart";
+import './Shop.css';
+import { useAppSelector } from '../../app/hooks';
+import { ProductModel, selectProducts } from "../product/productsSlice";
+import { Product } from "../product/Product";
 
 export function Shop() {
-	const product: Item = {
-		id: '1',
-		name: 'Call of Duty',
-		price: 150,
-	};
+  const products: ProductModel[] = useAppSelector(selectProducts);
 
-	return (
-		<div>
-			<Cart />
+    return (
+        <div>
+            <Cart />
 
-			<Product name={product.name} id={product.id} price={product.price} />
-		</div>
-	);
+            <div className="products-list">
+              { products.map((product, key) => <Product key={key} name={product.name} id={product.id} price={product.price} />)}
+            </div>
+        </div>
+    )
 }

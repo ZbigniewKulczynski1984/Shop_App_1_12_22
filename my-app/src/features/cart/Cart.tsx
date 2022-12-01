@@ -1,10 +1,10 @@
 import { useAppSelector } from '../../app/hooks';
-import { selectItems, selectItemsQuantity } from './cartSlice';
+import { selectItems, selectItemsQuantity, Item } from './cartSlice';
 import './Cart.css';
 
 export function Cart() {
-	const quantity = useAppSelector(selectItemsQuantity);
-	const items = useAppSelector(selectItems);
+    const quantity: number = useAppSelector(selectItemsQuantity);
+    const items: Item[] = useAppSelector(selectItems);
 
 	const names = ['Kamil', 'Jakub', 'Ania'];
 
