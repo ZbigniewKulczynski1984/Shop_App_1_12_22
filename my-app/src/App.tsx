@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import { Shop } from './features/counter/cart/Shop'
 
 function App() {
   return (

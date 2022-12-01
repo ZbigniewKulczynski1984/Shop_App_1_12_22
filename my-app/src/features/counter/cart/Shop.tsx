@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {  addItem, Item, selectItemsQuantity } from './cartSlice';
 
 export function Shop() {
