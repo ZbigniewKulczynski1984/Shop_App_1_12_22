@@ -1,24 +1,25 @@
-import { useAppSelector } from '../../app/hooks';
-import { selectItems, selectItemsQuantity, Item } from './cartSlice';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { selectItems, selectItemsQuantity, Item, removeItem } from './cartSlice';
 import './Cart.css';
 
 export function Cart() {
     const quantity: number = useAppSelector(selectItemsQuantity);
     const items: Item[] = useAppSelector(selectItems);
+    const dispatch = useAppDispatch();
 
-	const names = ['Kamil', 'Jakub', 'Ania'];
+    const renderRemoveButton = (id: string) => {
+      return (
+        <button onClick={() => dispatch(removeItem(id))}>Remove</button>
+      )
+    }
 
-	return (
-		<div id="cart" className="cart">
-			{quantity}
+    return (
+      <div id="cart" className="cart">
+        {quantity}
 
-			<ul>
-				{items.map((item, index) => (
-					<li key={index}>
-						{item.name} {item.price}
-					</li>
-				))}
-			</ul>
-		</div>
-	);
-}
+        <ul>
+            { items.map((item, index) => <li key={index}>{item.name} {item.price} ({item.quantity})
+            {renderRemoveButton(item.id)}</li>) }
+        </ul>
+      </div>
+    )
