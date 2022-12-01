@@ -1,0 +1,19 @@
+.product {
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    padding: 16px;
+}
+
+.product-price {
+    font-weight: 12px;
+    text-align: center;
+    display: block;
+}
+
+.product-btn {
+    border-radius: 5px;
+    width: 100%;
+    border: 1px solid blue;
+    background-color: lightskyblue;
+    cursor: pointer;
+}
