@@ -7,7 +7,7 @@ export function AlertList() {
 
     return (
         <div>
-            { alerts.map(alert => <Alert type={alert.type} message={alert.message} />)}
+            { alerts.map(alert => <Alert key={alert.id} type={alert.type} message={alert.message} />)}
         </div>
     )
 

@@ -12,8 +12,11 @@ import {
 import styles from './Counter.module.css';
 
 export function Counter() {
+  // State - Redux
   const count = useAppSelector(selectCount);
   const dispatch = useAppDispatch();
+
+  // Lokalny stan komponentu
   const [incrementAmount, setIncrementAmount] = useState('2');
 
   const incrementValue = Number(incrementAmount) || 0;

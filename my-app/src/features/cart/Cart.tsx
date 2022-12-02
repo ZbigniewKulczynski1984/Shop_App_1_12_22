@@ -1,10 +1,9 @@
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { selectItems, Item, removeItem, selectTotal, decreaseQuantity, increaseQuantity, selectIsDisplayed } from './cartSlice';
+import { selectItems, Item as CartItem, removeItem, selectTotal, decreaseQuantity, increaseQuantity, selectIsDisplayed } from './cartSlice';
 import './Cart.css';
 
 export function Cart() {
-    const quantity: number = useAppSelector(selectItemsQuantity);
-    const items: Item[] = useAppSelector(selectItems);
+    const items: CartItem[] = useAppSelector(selectItems);
     const total: number = useAppSelector(selectTotal);
     const isDisplayed: boolean = useAppSelector(selectIsDisplayed);
     const dispatch = useAppDispatch();
@@ -19,7 +18,7 @@ export function Cart() {
       <div id="cart" className={"card position-absolute top-0 end-0 z-index-1 w-25 " + (isDisplayed ? "d-block" : "d-none")}>
           <ul className="list-group list-group-flush">
               { items.map((item, index) => <li key={index} className="list-group-item d-flex justify-content-between align-items-center">{item.name} {item.price} 
-
+              
                 <span>
                   <button className="btn btn-light" onClick={() => dispatch(decreaseQuantity(item.id))}>-</button>
                   ({item.quantity})
