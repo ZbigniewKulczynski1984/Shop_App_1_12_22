@@ -1,5 +1,5 @@
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { selectItems, selectItemsQuantity, Item, removeItem, selectTotal, decreaseQuantity, increaseQuantity, selectIsDisplayed } from './cartSlice';
+import { selectItems, Item, removeItem, selectTotal, decreaseQuantity, increaseQuantity, selectIsDisplayed } from './cartSlice';
 import './Cart.css';
 
 export function Cart() {

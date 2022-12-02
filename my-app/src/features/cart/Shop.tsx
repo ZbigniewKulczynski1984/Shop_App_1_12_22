@@ -3,6 +3,7 @@ import './Shop.css';
 import { useAppSelector } from '../../app/hooks';
 import { ProductModel, selectProducts } from "../product/productsSlice";
 import { Product } from "../product/Product";
+import { AlertList } from "../notifications/AlertList";
 
 export function Shop() {
   const products: ProductModel[] = useAppSelector(selectProducts);
@@ -12,9 +13,10 @@ export function Shop() {
             <Cart />
 
           <div className="container pt-5">
-            <div className="products-list ">
+          <div className="products-list mb-5">
                 { products.map((product, key) => <Product key={key} name={product.name} id={product.id} price={product.price} />)}
             </div>
+            <AlertList />
           </div>
         </div>
     )
