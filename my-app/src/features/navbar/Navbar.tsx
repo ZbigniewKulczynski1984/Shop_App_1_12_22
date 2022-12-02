@@ -1,5 +1,5 @@
-import { useAppDispatch } from './app/hooks';
-import { toggleCart } from './features/cart/cartSlice';
+import { useAppDispatch } from '../../app/hooks';
+import { toggleCart } from '../cart/cartSlice';
 export function Navbar() {
     const dispatch = useAppDispatch();
 

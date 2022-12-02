@@ -1,7 +1,7 @@
 import { useAppDispatch } from "../../app/hooks";
 import { addNotification } from "../notofications/notificationSlice";
 import { addItem, Item } from '../cart/cartSlice';
-import './Product.css';
+import './Procuct.css';
 
 export interface ProductProps {
     name: string;
