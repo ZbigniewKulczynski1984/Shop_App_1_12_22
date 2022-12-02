@@ -16,6 +16,10 @@ const initialState: CartState = {
 	items: [],
 };
 
+const remove = (items: Item[], id: string) => {
+	items = items.filter((i) => i.id !== id);
+};
+
 export const cartSlice = createSlice({
 	name: 'cart',
 	initialState,
@@ -26,10 +30,8 @@ export const cartSlice = createSlice({
 			const item = state.items.find((i) => i.id === action.payload.id);
 
 			if (item) {
-			
-				item.quantity++; 
+				item.quantity++;
 			} else {
-				
 				state.items.push(action.payload);
 			}
 		},
@@ -41,13 +43,52 @@ export const cartSlice = createSlice({
 			);
 			state.items = itemsWithoutGivenItem;
 		},
+
+		increaseQuantity: (state, action: PayloadAction<string>) => {
+			const id = action.payload;
+
+			const item = state.items.find((i) => i.id === id);
+
+			if (item) {
+				item.quantity++;
+			}
+		},
+		decreaseQuantity: (state, action: PayloadAction<string>) => {
+			const id = action.payload;
+
+			const item = state.items.find((i) => i.id === id);
+
+			if (item) {
+				if (item.quantity > 1) {
+					item.quantity--;
+				} else {
+					state.items = state.items.filter((i) => i.id !== id);
+				}
+			}
+		},
 	},
 });
 
-export const { addItem, removeItem } = cartSlice.actions;
+export const { addItem, removeItem, increaseQuantity, decreaseQuantity } =
+	cartSlice.actions;
 
 export const selectItemsQuantity = (state: RootState) => {
-	return state.cart.items.length;
+	const total = state.cart.items.reduce((acc, item) => {
+		acc += item.quantity;
+		return acc; // (1) acc = 0 => 2; (2) acc = 2 => 2 + 3 = 5
+	}, 0); // acc = 0;
+
+	return total;
+};
+
+export const selectTotal = (state: RootState) => {
+	let total = 0;
+
+	state.cart.items.forEach((item) => {
+		total += item.price * item.quantity;
+	});
+
+	return total;
 };
 
 export const selectItems = (state: RootState) => {
