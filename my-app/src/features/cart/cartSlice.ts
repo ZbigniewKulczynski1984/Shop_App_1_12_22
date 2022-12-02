@@ -10,10 +10,12 @@ export interface Item {
 
 export interface CartState {
 	items: Item[];
+	isDisplayed: boolean;
 }
 
 const initialState: CartState = {
 	items: [],
+	isDisplayed: false,
 };
 
 const remove = (items: Item[], id: string) => {
@@ -66,19 +68,22 @@ export const cartSlice = createSlice({
 				}
 			}
 		},
+
+		toggleCart: (state) => {
+			state.isDisplayed = !state.isDisplayed;
+		  },
 	},
 });
 
-export const { addItem, removeItem, increaseQuantity, decreaseQuantity } =
-	cartSlice.actions;
+export const {  addItem,
+  removeItem,
+  increaseQuantity,
+  decreaseQuantity,
+  toggleCart,
+} = cartSlice.actions;
 
-export const selectItemsQuantity = (state: RootState) => {
-	const total = state.cart.items.reduce((acc, item) => {
-		acc += item.quantity;
-		return acc; // (1) acc = 0 => 2; (2) acc = 2 => 2 + 3 = 5
-	}, 0); // acc = 0;
-
-	return total;
+export const selectIsDisplayed = (state: RootState) => {
+  return state.cart.isDisplayed;
 };
 
 export const selectTotal = (state: RootState) => {

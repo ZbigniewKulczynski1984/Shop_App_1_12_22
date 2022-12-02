@@ -8,12 +8,14 @@ export function Shop() {
   const products: ProductModel[] = useAppSelector(selectProducts);
 
     return (
-        <div>
+        <div className="position-relative">
             <Cart />
 
-            <div className="products-list">
-              { products.map((product, key) => <Product key={key} name={product.name} id={product.id} price={product.price} />)}
+          <div className="container pt-5">
+            <div className="products-list ">
+                { products.map((product, key) => <Product key={key} name={product.name} id={product.id} price={product.price} />)}
             </div>
+          </div>
         </div>
     )
 }
