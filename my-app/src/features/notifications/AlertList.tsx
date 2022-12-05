@@ -9,9 +9,9 @@ export function AlertList() {
 	const alerts = useAppSelector(selectNotifications);
 
 	return (
-		<div>
+		<div >
 			{alerts.map((alert) => (
-				<Alert key={alert.id} type={alert.type} message={alert.message} />
+				<Alert key={alert.id} id={alert.id} type={alert.type} message={alert.message} />
 			))}
 		</div>
 	);
