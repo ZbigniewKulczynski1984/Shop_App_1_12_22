@@ -1,36 +1,45 @@
-import { useAppDispatch } from "../../app/hooks";
-import { addNotification } from "../notofications/notificationSlice";
+import { useAppDispatch } from '../../app/hooks';
+import { addNotification } from '../notifications/notificationSlice';
 import { addItem, Item } from '../cart/cartSlice';
-import './Product.css';
+import './Procuct.css';
 
 export interface ProductProps {
-    name: string;
-    price: number;
-    id: string;
-  }
-  
-  export function Product(product: ProductProps) {
-    const dispatch = useAppDispatch();
+	name: string;
+	price: number;
+	id: string;
+}
 
-    const item: Item = {
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      quantity: 1
-    }
+export function Product(product: ProductProps) {
+	const dispatch = useAppDispatch();
 
-    const handleClick = () => { 
-      dispatch(addItem(item));
-      dispatch(addNotification({ message: `Produkt ${item.name} został dodany do koszyka.`, type: 'success'}))
-    };
-  
-    return (<div className="card">
-        <div className="card-body">
-          <h3 className="card-title">{product.name}</h3>
+	const item: Item = {
+		id: product.id,
+		name: product.name,
+		price: product.price,
+		quantity: 1,
+	};
 
-          <span className="product-price">{product.price}</span>
+	const handleClick = () => {
+		dispatch(addItem(item));
+		dispatch(
+			addNotification({
+				message: `Produkt ${item.name} został dodany do koszyka.`,
+				type: 'success',
+			})
+		);
+	};
 
-          <button className="btn btn-primary" onClick={handleClick}>Add product</button>
-        </div>
-      </div>)
-  }
+	return (
+		<div className="card">
+			<div className="card-body">
+				<h3 className="card-title">{product.name}</h3>
+
+				<span className="product-price">{product.price}</span>
+
+				<button className="btn btn-primary" onClick={handleClick}>
+					Add product
+				</button>
+			</div>
+		</div>
+	);
+}
