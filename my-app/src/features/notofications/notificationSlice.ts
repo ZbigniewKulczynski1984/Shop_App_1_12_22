@@ -1,48 +1,54 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
 
 export interface Notification {
-	message: string;
-	type: string;
-	id: string;
+  message: string;
+  type: string;
+  id: string;
 }
 
 export interface NotificationsState {
-	items: Notification[];
+  notifications: Notification[];
 }
 
 const initialState: NotificationsState = {
-	items: [{ id: '1', type: 'success', message: 'Pierwszy alert' }],
+  notifications: [],
 };
 
 export const notificationsSlice = createSlice({
-	name: 'notifications',
-	initialState,
-	reducers: {
-		addNotification(
-			state,
-			action: PayloadAction<{ type: string; message: string }>
-		) {
-			const id = new Date().getTime().toString();
+  name: "notifications",
+  initialState,
+  reducers: {
+    addNotification(
+      state,
+      action: PayloadAction<{ type: string; message: string }>
+    ) {
+      const id = new Date().getTime().toString();
+	  
+      const notification: Notification = {
+        ...action.payload,
+        id,
+      };
 
-			const notification: Notification = {
-				...action.payload,
-				id,
-			};
-
-			state.items = [...state.items, notification];
-		},
-		removeNotification(state, action: PayloadAction<{ id: string }>) {
-			const { id } = action.payload;
-			state.items = state.items.filter((item) => item.id !== id);
-		},
-	},
+      state.notifications = [...state.notifications, notification];
+    },
+    removeNotification(state, action: PayloadAction<{ id: string }>) {
+      const { id } = action.payload;
+      state.notifications = state.notifications.filter(
+        (notification) => notification.id !== id
+      );
+    },
+  },
 });
 
 export const notificationsReducer = notificationsSlice.reducer;
 
 export const { addNotification, removeNotification } =
-	notificationsSlice.actions;
+  notificationsSlice.actions;
 
 export const selectNotifications = (state: RootState) =>
-	state.notifications.items;
+  state.notifications.notifications;
+
+export const selectLast3Notifications = (state: RootState) => {
+  return state.notifications.notifications.slice(-3);
+};

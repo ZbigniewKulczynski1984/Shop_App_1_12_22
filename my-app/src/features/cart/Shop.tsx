@@ -1,12 +1,12 @@
 import { Cart } from "./Cart";
 import './Shop.css';
 import { useAppSelector } from '../../app/hooks';
-import { ProductModel, selectProducts } from "../product/productsSlice";
+import { ProductModel, selectSearchResults } from "../product/productsSlice";
 import { Product } from "../product/Product";
 import { AlertList } from "../notofications/AlertList";
 
 export function Shop() {
-  const products: ProductModel[] = useAppSelector(selectProducts);
+  const products: ProductModel[] = useAppSelector(selectSearchResults);
 
     return (
         <div className="position-relative">

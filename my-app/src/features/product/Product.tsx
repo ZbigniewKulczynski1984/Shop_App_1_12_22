@@ -1,7 +1,7 @@
 import { useAppDispatch } from "../../app/hooks";
 import { addNotification } from "../notofications/notificationSlice";
 import { addItem, Item } from '../cart/cartSlice';
-import './Procuct.css';
+import './Product.css';
 
 export interface ProductProps {
     name: string;
@@ -21,7 +21,7 @@ export interface ProductProps {
 
     const handleClick = () => { 
       dispatch(addItem(item));
-      dispatch(addNotification({ message: 'Produkt został dodany do koszyka.', type: 'success'}))
+      dispatch(addNotification({ message: `Produkt ${item.name} został dodany do koszyka.`, type: 'success'}))
     };
   
     return (<div className="card">
