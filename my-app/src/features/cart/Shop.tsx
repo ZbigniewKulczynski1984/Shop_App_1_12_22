@@ -1,15 +1,21 @@
-import { Cart } from './Cart';
+import { Cart } from "./Cart";
 import './Shop.css';
-import { useAppSelector } from '../../app/hooks';
-import { ProductModel, selectSearchResults } from '../product/productsSlice';
-import { Product } from '../product/Product';
-import { AlertList } from '../notifications/AlertList';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { loadProducts, ProductModel, selectSearchResults } from "../product/productsSlice";
+import { Product } from "./Product";
+import { AlertList } from "../notifications/AlertList";
+import { useEffect } from "react";
 
 export function Shop() {
-	const products: ProductModel[] = useAppSelector(selectSearchResults);
+  const products: ProductModel[] = useAppSelector(selectSearchResults);
+  const dispatch = useAppDispatch();
 
-	return (
-		<div className="position-relative">
+  useEffect(() => {
+    dispatch(loadProducts());
+  }, []);
+
+    return (
+        <div className="position-relative">
 			<Cart />
 
 			<div className="container pt-5">

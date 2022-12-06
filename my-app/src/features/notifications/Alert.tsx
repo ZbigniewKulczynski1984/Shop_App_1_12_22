@@ -1,5 +1,5 @@
-import { useAppDispatch } from "../../app/hooks";
-import {removeNotification} from './/notificationSlice'
+import { useAppDispatch } from '../../app/hooks';
+import { removeNotification } from "./notificationSlice";
 
 export interface AlertProps {
     type: string;
@@ -8,7 +8,7 @@ export interface AlertProps {
 }
 
 export function Alert(props: AlertProps) {
-const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
     const getClassType = (type: string): string => {
         switch (type) {
@@ -26,12 +26,13 @@ const dispatch = useAppDispatch();
     }
 
     const handleRemoveClick = (id: string) => {
-        dispatch(removeNotification({ id}));
+        dispatch(removeNotification({ id }));
     }
 
     return (
         <div className={"alert alert-dismissible " + getClassType(props.type)}>
-        <strong>{props.message}</strong> <button type="button" className="btn-close" aria-label="Close" onClick={() => handleRemoveClick(props.id)}></button>
+            <strong>{props.message}</strong>
+            <button type="button" className="btn-close" aria-label="Close" onClick={() => handleRemoveClick(props.id)}></button>
         </div>
     )
 }

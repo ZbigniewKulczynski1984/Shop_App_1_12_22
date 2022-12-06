@@ -1,5 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+import { fetchProducts } from "./productAPI";
 
 export interface ProductModel {
   id: string;
@@ -14,74 +15,39 @@ export interface ProductsState {
   searchResults: ProductModel[];
 }
 
-const productsList = [
-  {
-    id: "1",
-    name: "Call of Duty",
-    price: 150,
-    description: "Super gra",
-    currency: "PLN",
-  },
-  {
-    id: "2",
-    name: "Fifa 2022",
-    price: 100,
-    description: "Super gra",
-    currency: "PLN",
-  },
-  {
-    id: "3",
-    name: "Cyberpunk",
-    price: 100,
-    description: "Super gra",
-    currency: "PLN",
-  },
-  {
-    id: "4",
-    name: "God of War",
-    price: 199,
-    description: "Super gra",
-    currency: "PLN",
-  },
-  {
-    id: "5",
-    name: "NBA 2k22",
-    price: 99,
-    description: "Super gra",
-    currency: "PLN",
-  },
-  {
-    id: "6",
-    name: "Crash Bandicoot",
-    price: 149,
-    description: "Super gra",
-    currency: "PLN",
-  },
-  {
-    id: "7",
-    name: "Horizon",
-    price: 169,
-    description: "Super gra",
-    currency: "PLN",
-  },
-  {
-    id: "8",
-    name: "Minecraft",
-    price: 80,
-    description: "Super gra",
-    currency: "PLN",
-  },
-];
-
 const initialState: ProductsState = {
-  products: productsList,
-  searchResults: productsList,
+  products: [],
+  searchResults: [],
 };
+
+export const loadProducts = createAsyncThunk(
+  "products/getProducts",
+  async (): Promise<ProductModel[]> => {
+    const productsResponse = await fetchProducts();
+
+    console.log(productsResponse);
+
+    const products = productsResponse.map((product) => {
+      return {
+        id: product.id.toString(),
+        name: product.title,
+        description: product.description,
+        price: product.price,
+        currency: "PLN",
+      };
+    });
+
+    console.log(products);
+
+    return products;
+  }
+);
 
 export const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
+    
     searchProducts: (
       state: ProductsState,
       action: PayloadAction<{ query: string }>
@@ -92,6 +58,12 @@ export const productsSlice = createSlice({
         product.name.toLowerCase().includes(query.toLowerCase())
       );
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(loadProducts.fulfilled, (state, action) => {
+      state.products = action.payload;
+      state.searchResults = action.payload;
+    });
   },
 });
 
