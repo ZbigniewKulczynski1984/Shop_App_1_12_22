@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { Shop } from './features/cart/Shop';
 import './../node_modules/bootstrap/dist/css/bootstrap.css';
+import './../node_modules/bootstrap-icons/font/bootstrap-icons.css';
 import { Navbar } from './features/navbar/Navbar';
 
 function App() {
