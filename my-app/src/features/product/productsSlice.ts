@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { fetchProducts } from "./productAPI";
+import { fetchProducts, fetchSortedProducts } from "../product/productAPI";
 
 export interface ProductModel {
   id: string;
@@ -14,7 +14,7 @@ export interface ProductModel {
 export interface ProductsState {
   products: ProductModel[];
   searchResults: ProductModel[];
-  loading: boolean
+  loading: boolean;
 }
 
 const initialState: ProductsState = {
@@ -28,7 +28,25 @@ export const loadProducts = createAsyncThunk(
   async (): Promise<ProductModel[]> => {
     const productsResponse = await fetchProducts();
 
-    console.log(productsResponse);
+    const products = productsResponse.map((product) => {
+      return {
+        id: product.id.toString(),
+        name: product.title,
+        description: product.description,
+        price: product.price,
+        image: product.image,
+        currency: "PLN",
+      };
+    });
+
+    return products;
+  }
+);
+
+export const sortProducts = createAsyncThunk(
+  "products/getSortedProducts",
+  async (sort: "asc" | "desc"): Promise<ProductModel[]> => {
+    const productsResponse = await fetchSortedProducts(sort);
 
     const products = productsResponse.map((product) => {
       return {
@@ -41,8 +59,6 @@ export const loadProducts = createAsyncThunk(
       };
     });
 
-    console.log(products);
-
     return products;
   }
 );
@@ -52,6 +68,7 @@ export const productsSlice = createSlice({
   initialState,
   reducers: {
     
+
     searchProducts: (
       state: ProductsState,
       action: PayloadAction<{ query: string }>
@@ -64,23 +81,34 @@ export const productsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(loadProducts.fulfilled, (state, action) => {
-      state.products = action.payload;
-      state.searchResults = action.payload;
-      state.loading = false;
-    })
-    .addCase(loadProducts.pending, (state, action) => {
-      state.loading = true;
-    })
+    builder
+      .addCase(loadProducts.fulfilled, (state, action) => {
+        state.products = action.payload;
+        state.searchResults = action.payload;
+        state.loading = false;
+      })
+      .addCase(loadProducts.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(sortProducts.fulfilled, (state, action) => {
+        state.products = action.payload;
+        state.searchResults = action.payload;
+        state.loading = false;
+      })
+      .addCase(sortProducts.pending, (state, action) => {
+        state.loading = true;
+      });
   },
 });
 
-export const selectProducts = (state: RootState) => state.products.products;
+export const selectProducts = (rootState: RootState) =>
+  rootState.products.products;
 
-export const selectSearchResults = (state: RootState) =>
-  state.products.searchResults;
+export const selectSearchResults = (rootState: RootState) =>
+  rootState.products.searchResults;
 
-  export const selectIsLoading = (state: RootState) => state.products.loading
+export const selectIsLoading = (rootState: RootState) =>
+  rootState.products.loading;
 
 export const { searchProducts } = productsSlice.actions;
 
