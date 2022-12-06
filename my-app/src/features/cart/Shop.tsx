@@ -2,7 +2,7 @@ import { Cart } from "./Cart";
 import './Shop.css';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { loadProducts, ProductModel, selectSearchResults } from "../product/productsSlice";
-import { Product } from "./Product";
+import { Product } from "../product/Product";
 import { AlertList } from "../notifications/AlertList";
 import { useEffect } from "react";
 
