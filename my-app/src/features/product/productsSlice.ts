@@ -13,11 +13,13 @@ export interface ProductModel {
 export interface ProductsState {
   products: ProductModel[];
   searchResults: ProductModel[];
+  loading: boolean
 }
 
 const initialState: ProductsState = {
   products: [],
   searchResults: [],
+  loading: false,
 };
 
 export const loadProducts = createAsyncThunk(
@@ -63,7 +65,11 @@ export const productsSlice = createSlice({
     builder.addCase(loadProducts.fulfilled, (state, action) => {
       state.products = action.payload;
       state.searchResults = action.payload;
-    });
+      state.loading = false;
+    })
+    .addCase(loadProducts.pending, (state, action) => {
+      state.loading = true;
+    })
   },
 });
 
@@ -71,6 +77,8 @@ export const selectProducts = (state: RootState) => state.products.products;
 
 export const selectSearchResults = (state: RootState) =>
   state.products.searchResults;
+
+  export const selectIsLoading = (state: RootState) => state.products.loading
 
 export const { searchProducts } = productsSlice.actions;
 
