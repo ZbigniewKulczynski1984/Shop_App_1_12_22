@@ -8,6 +8,7 @@ export interface ProductModel {
   description: string;
   price: number;
   currency: string;
+  image: string;
 }
 
 export interface ProductsState {
@@ -35,6 +36,7 @@ export const loadProducts = createAsyncThunk(
         name: product.title,
         description: product.description,
         price: product.price,
+        image: product.image,
         currency: "PLN",
       };
     });
